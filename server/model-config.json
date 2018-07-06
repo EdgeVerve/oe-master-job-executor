@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "sources": [
+      "../common/models"
+    ],
+    "mixins": [
+    ]
+  },
+  "MasterLock": {
+    "dataSource": "db",
+    "public": true
+  }
+
+}

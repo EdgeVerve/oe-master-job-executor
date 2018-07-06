@@ -1,0 +1,27 @@
+{
+  "name": "oe-master-job-executor",
+  "version": "1.0.0",
+  "description": "This module is an app-list module for oe-Cloud based applications. It provides the ability to run a function once in a randomly selected master app-instance (from a cluster). If the master goes down, a new master is elected and the function run again",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@10.73.97.24:oecloud.io/oe-master-job-executor.git"
+  },
+  "keywords": [
+    "master",
+    "slave",
+    "executor",
+    "scheduler"
+  ],
+  "author": "Ajith Vasudevan",
+  "license": "MIT"
+}

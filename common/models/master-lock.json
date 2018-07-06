@@ -1,0 +1,29 @@
+﻿{
+    "name": "MasterLock",
+    "base": "PersistedModel",
+    "idInjection": true,
+    "strict": false,
+    "description": "This model stores Master Instance lock details",
+    "options": {
+        "isFrameworkModel": true
+    },
+    "properties": {
+        "lockName": "string",
+        "instanceID": "string",
+        "ipPort": "string",
+        "heartbeatTime": "number"
+    },
+    "validations": [],
+    "relations": {},
+    "methods": {},
+    "indexes": {
+        "lockNameIndex": {
+            "keys": {
+                "lockName": 1
+            },
+            "options": {
+                "unique": true
+            }
+        }
+    }
+}
