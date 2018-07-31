@@ -1,0 +1,15 @@
+{
+    "name": "MasterControl",
+    "base": "PersistedModel",
+    "idinjection": true,
+    "strict": false,
+    "description": "This model stores MasterControl flags",
+    "options": {
+        "isFrameworkModel": true
+    },
+    "properties": {
+    },
+    "validations": [],
+    "relations": {},
+    "methods": {}
+}

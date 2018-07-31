@@ -9,6 +9,10 @@
   "MasterLock": {
     "dataSource": "db",
     "public": true
+  },
+  "MasterControl": {
+    "dataSource": "db",
+    "public": true
   }
 
 }
