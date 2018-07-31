@@ -7,7 +7,7 @@
 
 var loopback = require('loopback');
 var logger = require('oe-logger');
-var log = logger('master-control');
+var log = logger('masterControl');
 var masterJobExecutor = require('../..');
 var TAG = 'MASTER-CONTROL: ';
 
