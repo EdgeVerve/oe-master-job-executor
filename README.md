@@ -12,9 +12,9 @@ run the *job scheduler function* once.
 
 
 ## Implementation
-This module provides the infrastructure for catering to the above need. It is implemented as an app-list module for oe-Cloud based applications. 
-It provides the ability to automatically elect one app-instance among the cluster and run a function once in the elected app-instance, 
-which we call the <FUNCTION_>MASTER, for e.g., JOB_SCHEDULER_MASTER. If the master for a function goes down, a new master is elected 
+This module provides the infrastructure for catering to the above need. It is implemented as an **app-list** module for **oe-Cloud** based applications. 
+It provides the ability to automatically elect one app-instance from among the cluster-instances and run a specified function once in the elected app-instance, 
+which we call the <FUNCTION_>MASTER, for e.g., JOB_SCHEDULER_MASTER. If the master for a function goes down, a new master is elected for that function
 and the function is run again.
 
 To achieve the aforementioned functionality, a query-based locking in the database is used, along with updates of a lock *heartbeat* timestamp
@@ -71,7 +71,7 @@ For e.g.,
 
 ## Usage
 The *oe-master-job-executor* module can be used to start any number of "masters", for performing various one-time-on-boot functions/operations.
-Each such usage creates one master. Creation of a master involves providing a name for the function and the actual function itself, as shown below:
+Each such usage creates one master. Creation of a master involves providing a name for the lock (or function) and the actual function itself, as shown below:
 
 ```javascript
 
@@ -92,8 +92,8 @@ masterJobExecutor.startMaster(options);
 The above code can run, say, from a boot script in all app-instances of an application cluster, however, the function **start()** will be called only once
 on one of the app-instances (the master). If the master instance dies, **start()** will be called again once on another instance that is elected as master.
 
-The **stop()** function is called whenever the master is stopped either due to manual disablement via HTTP API call (see **Control** section below), or self-stoppage due to heartbeat not 
-getting updated for any reason.
+The **stop()** function is called whenever the master is stopped either due to manual disablement via HTTP API call (see **Control** section below), 
+or self-stoppage due to heartbeat timestamp not getting updated for any reason.
 
 
 ## Configuration
