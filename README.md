@@ -4,11 +4,11 @@
 In a clustered environment, applications sometimes need to execute a function just once on boot. And later, if the application
 instance running the one-time function goes down for any reason, another running instance needs to take over and run the function once.
 
-For example, a clustered application may be running 4 application instances, but a *job scheduler* function within this app
-may need to run once on boot, and only on a single app instance. The app instance which is elected to run the function 
-is the *master* instance for the function.
-
-If the *master* instance goes down, then another instance of the application should run the *job scheduler* function once and take over.
+For example, a clustered application may be running 4 application instances, but a *job scheduler function* within this app
+may need to run once on boot, and only on a single app instance. The app instance which is elected to run the *job-scheduler function* 
+is the *job-scheduler-master* instance.
+If the *job-scheduler-master* instance goes down, then another instance of the application should become the *job-scheduler-master* and
+run the *job scheduler function* once.
 
 
 ## Implementation
