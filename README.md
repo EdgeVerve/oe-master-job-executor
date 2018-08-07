@@ -2,7 +2,7 @@
 
 ## Need
 In a clustered environment, applications sometimes need to execute a function just once on boot. And later, if the application
-instance running the function goes down for any reason, another running instance needs to take over and run the function once.
+instance running the one-time function goes down for any reason, another running instance needs to take over and run the function once.
 
 For example, a clustered application may be running 4 application instances, but a *job scheduler* function within this app
 may need to run once on boot, and only on a single app instance. The app instance which is elected to run the function 
