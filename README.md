@@ -128,13 +128,12 @@ masterJobExecutor.checkMasterInterval     checkMasterInterval     CHECK_MASTER_I
                                                                                                                    app-instance checks for the master heartbeat
                                                                                                                    in order to try and become master itself
                                                                                                                      
-masterJobExecutor.heartbeatInterval       heartbeatInterval       MASTER_JOB_HEARTBEAT_INTERVAL  
-                                                                                          number (ms)   8000       This is the interval at which heartbeat 
-                                                                                                                   timestamp is updated by the master  
+masterJobExecutor.heartbeatInterval       heartbeatInterval       MASTER_JOB_HEARTBEAT_INTERVAL                    This is the interval at which heartbeat
+                                                                                          number (ms)   8000       timestamp is updated by the master 
+                                                                                                                     
 
-masterJobExecutor.maxHeartbeatRetryCount  maxHeartbeatRetryCount  MASTER_JOB_MAX_HEARTBEAT_RETRY_COUNT
-                                                                                          number        3          This is the number of times the master
-                                                                                                                   heartbeat will be retried upon falure
+masterJobExecutor.maxHeartbeatRetryCount  maxHeartbeatRetryCount  MASTER_JOB_MAX_HEARTBEAT_RETRY_COUNT             This is the number of times the master
+                                                                                          number        3          heartbeat will be retried upon falure
                                                                                                                    to send heartbeat.
 
 -----------------------------------------------------------------------------------------------------------------------------------------
