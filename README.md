@@ -2,12 +2,18 @@
 
 ## Need
 In a clustered environment, a boot script would run on all instances of the application, as the cluster comes up. 
-However, applications sometimes need to execute a function just once on boot, on a single application instance, 
-despite the function being in the boot-script of all application instances. And later, if the application
-instance running the one-time function goes down for any reason, another running instance needs to take over 
-and run the function once.
+However, irrespective of the number of application-instances in the cluster, sometimes there is a need to execute an 
+arbitrary function just once at the time of application-cluster startup;  and later, if the application instance 
+running the one-time function goes down for any reason, another running instance needs to take over 
+and run the function.
 
-For example, a clustered application may be running 4 application instances, but a *job scheduler function* within this app
+An example would be the case of a function that sends "application is up" heartbeat event at regular intervals. 
+Such a function, if started from a regular boot script, would start multiple timers sending extra/unwanted heartbeat events 
+depending on the number of app-instances in the cluster. This calls for a module that can run the function only 
+once on a single app-instance of the cluster. If the function-runner goes down, the function should be run again on another 
+active app-instance.
+
+Another example: A clustered application may be running 4 application instances, but a *job scheduler function* within this app
 may need to run once on boot, and only on a single app instance. The app instance which is elected to run the *job-scheduler function* 
 is the *job-scheduler-master* instance.
 If the *job-scheduler-master* instance goes down, then another instance of the application should become the *job-scheduler-master* and
