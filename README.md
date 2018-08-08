@@ -1,14 +1,17 @@
 # oe-master-job-executor
 
 ## Need
-In a clustered environment, applications sometimes need to execute a function just once on boot. And later, if the application
-instance running the one-time function goes down for any reason, another running instance needs to take over and run the function once.
+In a clustered environment, a boot script would run on all instances of the application, as the cluster comes up. 
+However, applications sometimes need to execute a function just once on boot, on a single application instance, 
+despite the function being in the boot-script of all application instances. And later, if the application
+instance running the one-time function goes down for any reason, another running instance needs to take over 
+and run the function once.
 
 For example, a clustered application may be running 4 application instances, but a *job scheduler function* within this app
 may need to run once on boot, and only on a single app instance. The app instance which is elected to run the *job-scheduler function* 
 is the *job-scheduler-master* instance.
 If the *job-scheduler-master* instance goes down, then another instance of the application should become the *job-scheduler-master* and
-run the *job scheduler function* once.
+run the *job scheduler function*.
 
 
 ## Implementation
@@ -17,8 +20,8 @@ It provides the ability to automatically elect one app-instance from among the c
 which we call the <FUNCTION_>MASTER, for e.g., JOB_SCHEDULER_MASTER. If the master for a function goes down, a new master is elected for that function
 and the function is run again.
 
-To achieve the aforementioned functionality, a query-based locking in the database is used, along with updates of a lock *heartbeat* timestamp
-at regular intervals by the master app-instance. All app-instances keep checking for missed heartbeats and are ready to take over 
+To achieve the aforementioned functionality, a database query/update-based locking is used, along with updates of a lock *heartbeat* timestamp
+at regular intervals by the master app-instance. All app-instances keep checking for missed master-heartbeats and are ready to take over 
 as master by deleting the lock from the database and creating their own lock.
 
 
