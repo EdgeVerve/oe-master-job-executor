@@ -9,12 +9,13 @@ var loopback = require('loopback');
 var logger = require('oe-logger');
 var log = logger('masterControl');
 var masterJobExecutor = require('../..');
-var TAG = 'MASTER-CONTROL: ';
+var TAG = 'master-control.js: ';
 
 
 module.exports = function MasterControlFn(MasterControl) {
-
+    var TAG = 'MasterControlFn(MasterControl): ';
     MasterControl.disable = function disable(lockName, reason, options, cb) {
+        var TAG = 'disable(lockName, reason, options, cb): ';
         log.debug(TAG, 'disabling ' + lockName + ':  reason: ' + reason);
         var MasterControl = loopback.getModelByType('MasterControl');
         MasterControl.findOne({where: {lockName: lockName}}, options, function findCb(err, masterControl) {
@@ -55,6 +56,7 @@ module.exports = function MasterControlFn(MasterControl) {
 
 
     MasterControl.enable = function enable(lockName, options, cb) {
+        var TAG = 'enable(lockName, options, cb): ';
         log.debug(TAG, '(re)enabling ' + lockName + ' Master');
         MasterControl.remove({lockName: lockName}, options, function findCb(err, res) {
             if(err) {
