@@ -23,8 +23,8 @@ run the *job scheduler function*.
 ## Implementation
 This module provides the infrastructure for catering to the above need. It is implemented as an **app-list** module for **oe-Cloud** based applications. 
 It provides the ability to automatically elect one app-instance from among the cluster-instances and run a specified function once in the elected app-instance, 
-which we call the <FUNCTION_>MASTER, for e.g., JOB_SCHEDULER_MASTER. If the master for a function goes down, a new master is elected for that function
-and the function is run again.
+which we call the <FUNCTION_>MASTER instance, for e.g., JOB_SCHEDULER_MASTER instance. If the master for a function goes down, 
+a new master is elected for that function and the function is run again.
 
 To achieve the aforementioned functionality, a database query/update-based locking is used, along with updates of a lock *heartbeat* timestamp
 at regular intervals by the master app-instance. All app-instances keep checking for missed master-heartbeats and are ready to take over 
