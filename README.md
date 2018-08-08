@@ -10,7 +10,7 @@ instance needs to take over and run the function.
 An example would be the case of a function that sends "application is up" heartbeat event at regular intervals. 
 Such a function, if started from a regular boot script, would start multiple timers sending extra/unwanted heartbeat events 
 depending on the number of app-instances in the cluster. This calls for a module that can run the function only 
-once on a single app-instance of the cluster. If the function-runner goes down, the function should be run again on another 
+once on a single app-instance of the cluster. If the function-runner instance goes down, the function should be run again on another 
 active app-instance.
 
 Another example: A clustered application may be running 4 application instances, but a *job scheduler function* within this app
