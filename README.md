@@ -87,7 +87,11 @@ function stop() {
 }
 
 var masterJobExecutor = require('oe-master-job-executor');
-var options = { lockName: 'JOB-SCHEDULER', masterJob: { start: start, stop: stop } };
+var options = { 
+                  lockName: 'JOB-SCHEDULER',                  // Mandatory
+                  masterJob: { start: start, stop: stop },    // Mandatory
+                  checkMasterInterval: 60000                  // Optional
+              };
 masterJobExecutor.startMaster(options);
 
 
@@ -104,7 +108,7 @@ The *oe-master-job-executor* module can be configured via -
 
 1. server/config.json
 2. environment variables
-3. startMaster options
+3. startMaster options (see **Usage** section above)
 
 with the following priority:  3 > 2 > 1
 
