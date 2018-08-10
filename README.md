@@ -79,8 +79,9 @@ For e.g.,
 </pre>
 
 ## Usage
-The *oe-master-job-executor* module can be used to start any number of "masters", for performing various one-time-on-boot functions/operations.
-Each such usage creates one master. Creation of a master involves providing a name for the lock (or function) and the actual function itself, as shown below:
+The *oe-master-job-executor* module can be used to start any number of *masters*, for performing various one-time-run functions/operations.
+Each such usage creates one *master*. Creation of a *master* involves providing a **lockName** for the *master* and a **masterJob** object which 
+has the one-time-run function to execute, as shown below:
 
 ```javascript
 
@@ -96,7 +97,7 @@ var masterJobExecutor = require('oe-master-job-executor');
 var options = { 
                   lockName: 'JOB-SCHEDULER',                  // Mandatory
                   masterJob: { start: start, stop: stop },    // Mandatory
-                  checkMasterInterval: 60000                  // Optional
+                  checkMasterInterval: 60000                  // Optional. See 'Configuration' section below for details.
               };
 masterJobExecutor.startMaster(options);
 
@@ -112,11 +113,12 @@ or self-stoppage due to heartbeat timestamp not getting updated for any reason.
 ## Configuration
 The *oe-master-job-executor* module can be configured via -
 
-1. server/config.json
-2. environment variables
-3. startMaster options (see **Usage** section above)
+1.  Default values in code (no configuration)
+2.  server/config.json
+3.  environment variables
+4.  startMaster options (see **Usage** section above)
 
-with the following priority:  3 > 2 > 1
+with the following priority:  4 > 3 > 2 > 1
 
 Priority is applicable on a per-parameter basis.
 
@@ -166,7 +168,7 @@ An example of *oe-master-job-executor* configuration via **server/config.json** 
 
 ## Control
 The master can be stopped and started manually via HTTP API. Disabling the master causes the current master to call the 
-**stop()** function of the **masterJob** and it will also prevent other app-instances from becoming a master.
+**stop()** function of the *masterJob* and it will also prevent other app-instances from becoming a master.
 
 The API to call for stopping/disabling the master is as follows:
 ```
@@ -192,5 +194,5 @@ e.g., payload:
 }
 
 ```
-Upon restarting/re-enabling a master, one of the running app-instances will get elected as master and its **start()** function is called once.
+Upon restarting/re-enabling a master, one of the running app-instances will get elected as master and the *masterJob*'s **start()** function is called once.
 
