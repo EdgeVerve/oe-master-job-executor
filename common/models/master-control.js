@@ -15,6 +15,10 @@ var TAG = 'master-control.js: ';
 module.exports = function MasterControlFn(MasterControl) {
     var TAG = 'MasterControlFn(MasterControl): ';
     MasterControl.disable = function disable(lockName, reason, options, cb) {
+        if(typeof options === 'function') { 
+            cb = options; 
+            options = { ignoreAutoScope: true, fetchAllScopes: true };
+        }
         var TAG = 'disable(lockName, reason, options, cb): ';
         log.debug(TAG, 'disabling ' + lockName + ':  reason: ' + reason);
         var MasterControl = loopback.getModelByType('MasterControl');
@@ -56,6 +60,10 @@ module.exports = function MasterControlFn(MasterControl) {
 
 
     MasterControl.enable = function enable(lockName, options, cb) {
+        if(typeof options === 'function') { 
+            cb = options; 
+            options = { ignoreAutoScope: true, fetchAllScopes: true };
+        }
         var TAG = 'enable(lockName, options, cb): ';
         log.debug(TAG, '(re)enabling ' + lockName + ' Master');
         MasterControl.remove({lockName: lockName}, options, function findCb(err, res) {
