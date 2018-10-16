@@ -1,5 +1,14 @@
 # oe-master-job-executor
 
+## Table of Contents
+- [Need](#Need)
+- [Implementation](#Implementation)
+- [Setup](#Setup)
+- [Usage](#Usage)
+- [Configuration](#Configuration)
+- [Control](#Control)
+
+<a name="Need"></a>
 ## Need
 In a clustered environment, a boot script would run on all instances of the application, as the cluster comes up. 
 However, irrespective of the number of application-instances in the cluster, sometimes there is a need to execute an 
@@ -19,7 +28,7 @@ is the *job-scheduler-master* instance.
 If the *job-scheduler-master* instance goes down, then another instance of the application should become the *job-scheduler-master* and
 run the *job scheduler function*.
 
-
+<a name="Implementation"></a>
 ## Implementation
 This module provides the infrastructure for catering to the above need. It is implemented as an **app-list** module for **oe-Cloud** based applications. 
 It provides the ability to automatically elect one app-instance from among the cluster-instances and run a specified function once in the elected app-instance, 
@@ -30,7 +39,7 @@ To achieve the aforementioned functionality, a database query/update-based locki
 at regular intervals by the master app-instance. All app-instances keep checking for missed master-heartbeats and are ready to take over 
 as master by deleting the lock from the database and creating their own lock.
 
-
+<a name="Setup"></a>
 ## Setup
 To get the *oe-master-job-executor* feature in the application, the **oe-master-job-executor** node module needs to be added 
 as a *package.json* dependency in the application. 
@@ -78,6 +87,7 @@ For e.g.,
 ]
 </pre>
 
+<a name="Usage"></a>
 ## Usage
 The *oe-master-job-executor* module can be used to start any number of *masters*, for performing various one-time-run functions/operations.
 Each such usage creates one *master*. Creation of a *master* involves providing a **lockName** for the *master* and a **masterJob** object which 
@@ -109,7 +119,7 @@ on one of the app-instances (the master). If the master instance dies, **start()
 The **stop()** function is called whenever the master is stopped either due to manual disablement via HTTP API call (see **Control** section below), 
 or self-stoppage due to heartbeat timestamp not getting updated for any reason.
 
-
+<a name="Configuration"></a>
 ## Configuration
 The *oe-master-job-executor* module can be configured via -
 
@@ -166,6 +176,7 @@ An example of *oe-master-job-executor* configuration via **server/config.json** 
 }
 ```
 
+<a name="Control"></a>
 ## Control
 The master can be stopped and started manually via HTTP API. Disabling the master causes the current master to call the 
 **stop()** function of the *masterJob* and it will also prevent other app-instances from becoming a master.
