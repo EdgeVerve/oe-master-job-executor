@@ -8,6 +8,9 @@
         "isFrameworkModel": true
     },
     "properties": {
+        "lockName": "string",
+        "reason": "string",
+        "lastUpdatedTime" : "number"
     },
     "validations": [],
     "relations": {},
