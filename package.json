@@ -1,6 +1,6 @@
 {
   "name": "oe-master-job-executor",
-  "version": "1.8.0",
+  "version": "1.7.0",
   "description": "This module is an app-list module for oe-Cloud based applications. It provides the ability to run a function once in a randomly selected master app-instance (from a cluster). If the master goes down, a new master is elected and the function run again",
   "main": "index.js",
   "dependencies": {},
