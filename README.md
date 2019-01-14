@@ -5,30 +5,30 @@ In a clustered environment, applications sometimes need to execute a function ju
 instance running the one-time function goes down for any reason, another running instance needs to take over and run the function once.
 
 For example, a clustered application may be running 4 application instances, but a *job scheduler function* within this app
-may need to run once on boot, and only on a single app instance. The app instance which is elected to run the *job-scheduler function* 
+may need to run once on boot, and only on a single app instance. The app instance which is elected to run the *job-scheduler function*
 is the *job-scheduler-master* instance.
 If the *job-scheduler-master* instance goes down, then another instance of the application should become the *job-scheduler-master* and
 run the *job scheduler function* once.
 
 
 ## Implementation
-This module provides the infrastructure for catering to the above need. It is implemented as an **app-list** module for **oe-Cloud** based applications. 
-It provides the ability to automatically elect one app-instance from among the cluster-instances and run a specified function once in the elected app-instance, 
+This module provides the infrastructure for catering to the above need. It is implemented as an **app-list** module for **oe-Cloud** based applications.
+It provides the ability to automatically elect one app-instance from among the cluster-instances and run a specified function once in the elected app-instance,
 which we call the <FUNCTION_>MASTER, for e.g., JOB_SCHEDULER_MASTER. If the master for a function goes down, a new master is elected for that function
 and the function is run again.
 
 To achieve the aforementioned functionality, a query-based locking in the database is used, along with updates of a lock *heartbeat* timestamp
-at regular intervals by the master app-instance. All app-instances keep checking for missed heartbeats and are ready to take over 
+at regular intervals by the master app-instance. All app-instances keep checking for missed heartbeats and are ready to take over
 as master by deleting the lock from the database and creating their own lock.
 
 
 ## Setup
-To get the *oe-master-job-executor* feature in the application, the **oe-master-job-executor** node module needs to be added 
-as a *package.json* dependency in the application. 
+To get the *oe-master-job-executor* feature in the application, the **oe-master-job-executor** node module needs to be added
+as a *package.json* dependency in the application.
 
-Also, the module needs be added to the `server/app-list.json` file in the app. 
+Also, the module needs be added to the `server/app-list.json` file in the app.
 
-For e.g., 
+For e.g.,
 
 **package.json**  (only part of the file is shown here, with relevant section in **bold**):
 
@@ -39,8 +39,8 @@ For e.g.,
        ...
        ...
        ...
-       "oe-workflow": "git+http://evgit/oecloud.io/oe-workflow.git#master",
-       <B>"oe-master-job-executor": "git+http://evgit/oecloud.io/oe-master-job-executor.git#master",</B>
+       "oe-workflow": "git+https://github.com/EdgeVerve/oe-workflow.git#master",
+       <B>"oe-master-job-executor": "git+https://github.com/EdgeVerve/oe-master-job-executor.git#master",</B>
        "passport": "0.2.2",
        ...
        ...
@@ -92,7 +92,7 @@ var masterJobExecutor = new MasterJobExecutor(options);    // create the MasterJ
 The above code can run, say, from a boot script in all app-instances of an application cluster, however, the function **start()** will be called only once
 on one of the app-instances (the master). If the master instance dies, **start()** will be called again once on another instance that is elected as master.
 
-The **stop()** function is called whenever the master is stopped either due to manual disablement via HTTP API call (see **Control** section below), 
+The **stop()** function is called whenever the master is stopped either due to manual disablement via HTTP API call (see **Control** section below),
 or self-stoppage due to heartbeat timestamp not getting updated for any reason.
 
 
@@ -111,19 +111,19 @@ The following are the configuration parameters:
 
 <pre>
 ----------------------------------------------------------------------------------------------------------------------------------------
-config.json setting                       startmaster option      Env Variable            type          default    Description          
+config.json setting                       startmaster option      Env Variable            type          default    Description
 ----------------------------------------------------------------------------------------------------------------------------------------
 masterJobExecutor.initDelay               initDelay               INIT_DELAY              number (ms)   1000       This setting determines the delay
-                                                                                                                   in milliseconds since boot, after 
+                                                                                                                   in milliseconds since boot, after
                                                                                                                    which the master is started
-                                                                                                     
-masterJobExecutor.checkMasterInterval     checkMasterInterval     CHECK_MASTER_INTERVAL   number (ms)   30000      This is the interval at which each 
+
+masterJobExecutor.checkMasterInterval     checkMasterInterval     CHECK_MASTER_INTERVAL   number (ms)   30000      This is the interval at which each
                                                                                                                    app-instance checks for the master heartbeat
                                                                                                                    in order to try and become master itself
-                                                                                                                     
-masterJobExecutor.heartbeatInterval       heartbeatInterval       MASTER_JOB_HEARTBEAT_INTERVAL  
-                                                                                          number (ms)   8000       This is the interval at which heartbeat 
-                                                                                                                   timestamp is updated by the master  
+
+masterJobExecutor.heartbeatInterval       heartbeatInterval       MASTER_JOB_HEARTBEAT_INTERVAL
+                                                                                          number (ms)   8000       This is the interval at which heartbeat
+                                                                                                                   timestamp is updated by the master
 
 masterJobExecutor.maxHeartbeatRetryCount  maxHeartbeatRetryCount  MASTER_JOB_MAX_HEARTBEAT_RETRY_COUNT
                                                                                           number        3          This is the number of times the master
@@ -153,7 +153,7 @@ An example of *oe-master-job-executor* configuration via **server/config.json** 
 ```
 
 ## Control
-The master can be stopped and started manually via HTTP API. Disabling the master causes the current master to call the 
+The master can be stopped and started manually via HTTP API. Disabling the master causes the current master to call the
 **stop()** function of the **masterJob** and it will also prevent other app-instances from becoming a master.
 
 The API to call for stopping/disabling the master is as follows:
@@ -163,7 +163,7 @@ POST /api/mastercontrols/disable
 e.g., payload:
 ```json
 {
-    "lockName": "JOB-SCHEDULER",  
+    "lockName": "JOB-SCHEDULER",
     "reason": "testing"
 }
 

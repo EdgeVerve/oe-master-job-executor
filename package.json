@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@evgit:oecloud.io/oe-master-job-executor.git"
+    "url": "git@github.com:EdgeVerve/oe-master-job-executor.git"
   },
   "keywords": [
     "master",
