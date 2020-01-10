@@ -5,25 +5,24 @@
  *
  */
 var mongoHost = process.env.MONGO_HOST || 'localhost';
+var mongoPort = process.env.MONGO_PORT ? parseInt(process.env.MONGO_PORT) : 27017;
 var dbName = process.env.DB_NAME || 'oe-master-job-executor-test';
-module.exports = 
-{
-  "memdb": {
-    "name": "memdb",
-    "connector": "memory"
+module.exports = {
+  'memdb': {
+    'name': 'memdb',
+    'connector': 'memory'
   },
-  "transient": {
-    "name": "transient",
-    "connector": "transient"
+  'transient': {
+    'name': 'transient',
+    'connector': 'transient'
   },
-  "db": {
+  'db': {
     'host': mongoHost,
-    'port': 27017,
-    'url': 'mongodb://' + mongoHost + ':27017/' + dbName,
+    'port': mongoPort,
+    'url': 'mongodb://' + mongoHost + ':' + mongoPort + '/' + dbName,
     'database': dbName,
     'name': 'db',
-    'connector': 'mongodb',
+    'connector': 'oe-connector-mongodb',
     'connectionTimeout': 500000
   }
 };
-
